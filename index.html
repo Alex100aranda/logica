@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase logica de programacion</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+  <!-- Título Principal -->
+  <header>
+    <h1><i class="fas fa-folder-open"></i> LOGICA DE PROGRAMACION</h1>
+  </header>
+
+  <main>
+
+    <!-- Sección: Videos -->
+    <section id="videos">
+      <h2 class="section-title"><i class="fas fa-video"></i> Videos</h2>
+      <div class="cards-container">
+        <!-- Card de video usando el link proporcionado -->
+        <button class="card video-card" data-video="https://www.youtube.com/embed/TdITcVD64zI?autoplay=1" aria-label="Reproducir video: Ejemplo">
+          <div class="video-thumb">
+            <!-- Miniatura de YouTube -->
+            <img src="https://img.youtube.com/vi/TdITcVD64zI/hqdefault.jpg" alt="Miniatura del video" />
+            <span class="play-badge"><i class="fas fa-play"></i></span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Ejemplo de Video</h3>
+            <p class="card-description">
+              Demostración en video para evidencias <i class="fas fa-clapperboard"></i>
+            </p>
+          </div>
+        </button>
+
+        <!-- Puedes duplicar esta card para más videos (cambiando el ID del video en data-video y la miniatura) -->
+        <button class="card video-card" data-video="https://www.youtube.com/embed/TdITcVD64zI?autoplay=1" aria-label="Reproducir video: Ejemplo 2">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/TdITcVD64zI/hqdefault.jpg" alt="Miniatura del video 2" />
+            <span class="play-badge"><i class="fas fa-play"></i></span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Ejemplo de Video 2</h3>
+            <p class="card-description">
+              Recurso audiovisual complementario <i class="fas fa-photo-video"></i>
+            </p>
+          </div>
+        </button>
+      </div>
+      <p class="section-subtitle">Haz clic en cualquier tarjeta para ver el video sin salir del sitio.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Tu Nombre | Portafolio de Evidencias
+  </footer>
+
+  <!-- Modal de Video -->
+  <div id="video-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Reproductor de video">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-dialog" role="document">
+      <button class="modal-close" aria-label="Cerrar video" title="Cerrar" data-close="true">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="video-wrapper">
+        <!-- Iframe se inyecta dinámicamente -->
+        <iframe id="video-frame" src="" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script: Apertura/cierre del modal y carga del video -->
+  <script>
+    (function () {
+      const modal = document.getElementById('video-modal');
+      const iframe = document.getElementById('video-frame');
+      const videoButtons = document.querySelectorAll('.video-card');
+
+      function openModal(src) {
+        iframe.src = src;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        // Evita el scroll del body
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        // Detener reproducción
+        iframe.src = '';
+        document.body.style.overflow = '';
+      }
+
+      videoButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const src = btn.getAttribute('data-video');
+          openModal(src);
+        });
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.dataset.close === 'true') {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
